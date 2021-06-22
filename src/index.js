@@ -2,11 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+
 import reportWebVitals from './reportWebVitals';
+//import Tgrba from './Components/Restaurant/Restaurant'
+//import AddMreal from './Components/Addmeal/Addmeal'
+import Slidebar from './Components/Slidebar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Slidebar />
   </React.StrictMode>,
   document.getElementById('root')
 );

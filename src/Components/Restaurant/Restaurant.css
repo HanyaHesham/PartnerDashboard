@@ -1,0 +1,93 @@
+.topnavv {
+    overflow: hidden;
+    background-color: chocolate;
+}
+
+    .topnavv a {
+        display: block;
+        color: black;
+        padding: 14px 16px;
+       
+        text-decoration: none;
+        font-size: 17px;
+        border-bottom: 3px solid transparent;
+    
+        
+    }
+
+        .topnavv a:hover {
+         
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .topnavv a.active {
+            border-bottom: 3px solid #810000;
+        }
+
+         
+          #order1{
+           padding-right: 20px;
+           margin-top: 20px;
+           
+          }
+         
+           .thandlabel{
+            font-weight: bold;
+            color: #810000;
+            text-align: center;
+            padding-right: 2px;
+          }
+          .inputt{
+                     border-radius: 5px;
+                     height: 40px;
+          }
+          .inputtt{
+            border-radius: 5px;
+            height: 80px;
+          }
+          .inputtbtn{
+            text-align: center;
+            margin-left: 350px;
+          }
+
+          .wrapmain{
+              margin: 0;
+              padding: 0;
+              box-sizing: border-box;
+              list-style: none;
+              text-decoration: none;
+          }
+       .wrapper{
+           display: flex;
+           position: relative;
+       }
+       .wrapper .sidebar{
+                 position: fixed;
+                 width: 200px;
+                 height: 100%;
+                 background: #4b4276;
+                 padding: 30px 0;
+       }
+       .wrapper .sidebar ul li{
+           padding: 15px;
+           border-bottom: 1px solid rgba(0,0,0,0.05);
+           border-top: 1px solid rgba(225,225,225,0.05);
+       }
+        
+       .wrapper .sidebar ul li a{
+           color:#bdb8b7;
+          
+       }
+       
+       .wrapper .sidebar ul li a .fas{
+        width: 25px;
+    }
+
+    .wrapper .sidebar ul li:hover{
+        background: #594f8d;
+    }
+    .wrapper .sidebar ul li:hover a{
+        color:#fff;
+    }
+       
