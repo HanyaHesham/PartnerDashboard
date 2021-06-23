@@ -151,10 +151,20 @@ handleAddrestaurant=()=>{
        
         return ( 
                <>
+<<<<<<< Updated upstream
             <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100}}>
                 <h3>FoodAway</h3>
                 <hr></hr>               
                 <div class="row" >                       
+=======
+            <div class="container shadow p-3 mb-5 bg-white rounded" >
+
+                <h3>Talbat</h3>
+                <hr></hr>
+               
+                <div class="row" >
+                       
+>>>>>>> Stashed changes
                      <div class="col col-md-12">
                          {
                            <>

@@ -1,0 +1,39 @@
+#catcont{
+    border: 1px solid gainsboro;
+   margin-top: 100px;
+   width: 70%;
+    
+}
+.categories{
+    /* border: 1px solid black; */
+    padding: 50px;
+
+}
+.meals{
+    /* border: 1px solid black; */
+    padding: 50px;
+}
+.close{
+    border: none;
+    background: none;
+    float: right;
+    color: red;
+}
+#addmealbtn{
+float: right;
+transition-duration: 0.4s;
+font-weight: bold;
+border: 1px solid green;
+}
+#addmealbtn:hover {
+    background-color: #4CAF50; 
+    color: white;
+}
+#AddCatbtn{
+    transition-duration: 0.4s;
+    border: 1px solid green;
+}
+#AddCatbtn:hover{
+    background-color: #4CAF50; 
+    color: white;
+}
