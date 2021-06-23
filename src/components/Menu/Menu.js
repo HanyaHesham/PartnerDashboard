@@ -5,10 +5,11 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash,faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 export default class Menu extends React.Component{
     state={
-        show:false,Category:[],CategoryName:"",Meals:[]
+        show:false,Category:[],CategoryName:"",Meals:[],Categoryid:"",CusineName:"",showmodal:false,Cusine:[]
     }
     handleClose = () =>{
         this.setState({
@@ -20,6 +21,16 @@ export default class Menu extends React.Component{
          show:true
        })
      };
+     handleshow=()=>{
+      this.setState({
+        showmodal:true
+      })
+     }
+     handleClosemodal=()=>{
+      this.setState({
+        showmodal:false
+      })
+     }
      
      handlecategory=(e)=>{
         this.state.CategoryName=e.target.value
@@ -28,6 +39,13 @@ export default class Menu extends React.Component{
        })
        console.log(this.state.CategoryName)
    }
+   handlecusine=(e)=>{
+    this.state.CusineName=e.target.value
+   this.setState({
+    CusineName:this.state.CusineName
+   })
+   console.log(this.state.CusineName)
+}
      AddCategoryHandler=()=>{
         const config = {
             headers: {
@@ -49,11 +67,20 @@ export default class Menu extends React.Component{
          console.log(this.state.Category)
          axios.get(`https://localhost:44327/api/Category/All?id=1`).then(x=>{
             this.setState({Category:x.data})})
+            axios.get(`https://localhost:44327/api/cusine/1`).then(x=>{
+              this.setState({Cusine:x.data})})
      }
      handlemeals=(id)=>{
+       
         axios.get(`https://localhost:44327/api/Meal/All?id=${id}`).then(x=>{
-            this.setState({Meals:x.data})})
+            this.setState({Meals:x.data,Categoryid:id})})
      }
+     handleGetCusines=(id)=>{
+      axios.get(`https://localhost:44327/api/cusine/${id}`).then(x=>{
+        this.setState({Cusine:x.data})})
+     }
+     
+
      DeleteCategory=(id)=>{
 
         swal({
@@ -113,10 +140,32 @@ export default class Menu extends React.Component{
           });     
 
      }
+     addcusine=()=>{
+      const config = {
+        headers: {
+          'Content-Type':'application/x-www-form-urlencoded',
+          'Accept':'*/*',
+        }
+      }
+      const paramss = new URLSearchParams()
+      paramss.append('cusineName',this.state.CusineName)
+      // paramss.append('Restaurant_RestaurantId', 1)
+      let URLL=`https://localhost:44327/api/Cusine?cusineName=${this.state.CusineName}&RestId=${1}`
+      axios.post(URLL,paramss,config).then(res=>{
+        this.setState({Cusine:res.data})
+        }).catch(error=>{
+            console.log(error)
+            })  
+
+     }
     render(){
         return(
-            <div className="container shadow" id="catcont">
-            <div class="row">
+          
+            <div className="container  row shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
+              <div className="container row ">
+              <h2 style={{color:"brown"}}>My Menu Items </h2>
+           
+              <hr></hr>
                 <div className="col-4 categories" >
                     <div className="row">
                     <h3 className="col-7">Categories</h3>
@@ -146,7 +195,8 @@ export default class Menu extends React.Component{
                     <br></br>
                     <ul>
                         {   this.state.Category.map((cat,i)=>{
-                                 return(     
+                       
+                                 return(    
                                     <div  className="row">
                                             <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Name}  </li>
                                             <button className="close col-3" aria-label="Close"  onClick={()=>this.DeleteCategory(cat.CategoryId)}>
@@ -162,7 +212,7 @@ export default class Menu extends React.Component{
                 <div className="col-8 meals">
                     <div>
                         <div></div>
-                        <button className="btn" id="addmealbtn"  >Add new Meal <FontAwesomeIcon  icon={faPlus} /></button>
+                        <Link  to={{pathname:`/HanyaHesham/PartnerDashboard/AddMeal/${this.state.Categoryid}` ,selectedCategory:this.state.Categoryid}} className="btn" id="addmealbtn"  >Add new Meal <FontAwesomeIcon  icon={faPlus} /></Link>
                       
                     </div>
                     <br></br><br></br>
@@ -189,10 +239,47 @@ export default class Menu extends React.Component{
                             }
                   
                 </div>
-                
+                </div>
+                <div className="row">
+                <h3 className="col-7">Cusines</h3>
+                <button className="col-3" onClick={this.handleshow}>addcusine</button>
+                <Modal show={this.state.showmodal} onHide={this.handleClosemodal} >
+                                <Modal.Body> 
+                                <button className="close" onClick={this.handleClosemodal} aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <br></br>
+                                <form>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                            <label for="Cusineinput">Cusine name</label>
+                                            <input type="Text" class="form-control" id="Cusineinput" placeholder="Ex-Salads" onChange={this.handlecusine}  />
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                        <div class="form-row">
+                                        <button className="btn btn-success form-control" onClick={this.addcusine} >Save</button>
+                                        </div>
+                                </form>
+                                </Modal.Body>
+                          
+                            </Modal>
+                            {   this.state.Cusine.map((cat,i)=>{
+                       
+                       return(    
+                          <div  className="row">
+                                  <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Cuisine.CuisineName}  </li>
+                                  {/* <button className="close col-3" aria-label="Close"  onClick={()=>this.DeleteCategory(cat.CategoryId)}>
+                                  <FontAwesomeIcon  icon={faTrash} style={{color:"red"}} />
+                                  </button> */}
+                          </div>   
+                          )
+                  })
+              }
+                </div>
 
             </div>
-            </div>
+          
         )
     }
 }
