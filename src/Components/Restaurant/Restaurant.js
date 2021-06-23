@@ -2,6 +2,7 @@ import React from 'react';
 import './Restaurant.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSmile, faUtensils,faHome,faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import logo from './1.jpg'
 import axios from 'axios';
 
 
@@ -9,13 +10,36 @@ class Tgrba extends React.Component {
 
     state = {
       RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:"",EndWorkingHours:"",Date:"",MaxDeliveryTime:"",AddressID:"",
-      PartenerID:""
+      PartenerID:"1",
+      fd:new FormData() 
     }
     
     componentDidMount() {
         //this.setState({Rest:this.state.Rest})
+
     }
 
+
+    change=()=>{
+      var file = document.getElementById("fileI").files[0]; 
+      var reader=new FileReader();
+      this.state.fd.append('file',file,file.name);
+      reader.readAsDataURL(file);
+      reader.onload=readerEvent=>{
+      var content = readerEvent.target.result;
+      document.getElementById("t").src = content;
+}
+   
+ }
+
+ saveImage=()=>{
+
+  axios.post("https://localhost:44327/api/imagestore",this.state.fd).then(
+    (res)=>{
+      console.log(res.data)
+    }
+  )
+}
     handleRestaurantName=(e)=>{
       this.state.RestaurantName=e.target.value
      this.setState({
@@ -95,7 +119,7 @@ handleAddressID=(e)=>{
 }
 
 
-handleAddOrder=()=>{
+handleAddrestaurant=()=>{
       
        
   const config = {
@@ -115,10 +139,10 @@ handleAddOrder=()=>{
     paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
     paramss.append('PartenerID', this.state.PartenerID)
     paramss.append('AddressID', this.state.AddressID)
-
+    console.log(paramss)
     let URLL=`https://localhost:44327/api/Restaurants`
     axios.post(URLL,paramss,config).then(res=>{
-
+           console.log(paramss)
         console.log(res)
         
     }).catch(error=>{
@@ -132,21 +156,8 @@ handleAddOrder=()=>{
        
         return (
                <>
-         <div class="wrapmain">
-                 <div class="wrapper">
-                     <div class="sidebar">
-                        <ul>
-                            <li>  <a href="#"><i class="fas"><FontAwesomeIcon  icon={faHome} /></i></a> Restaurant  </li>
-                            <li>  <a href="#"><i class="fas"><FontAwesomeIcon  icon={faUtensils} /></i> </a> menu  </li>
-                            <li>  <a href="#"><i class="fas"><FontAwesomeIcon  icon={faShoppingCart} /></i></a> order </li>
-                        </ul>
-                     </div>
-                     <div class="main-content">
-                        <div class="header"> welcome</div>
-                        <div class="info"> weme</div>
-                      </div>
-               </div>
-          </div>
+         
+        
             <div class="container shadow p-3 mb-5 bg-white rounded" >
 
                 <h3>Talbat</h3>
@@ -176,7 +187,13 @@ handleAddOrder=()=>{
                                 
                                 <label for="validationCustom011" class="col-sm-4 col-form-label thandlabel">Image</label>
                                 <div class="col-sm-8">
-                                <input type="file" class="form-control " id="validationCustom011"style={{width:500}}  ></input></div>
+                                <input id='fileI' type="file" name="file"  style={{display: 'none'}} onChange={()=>this.change()}/>
+      <img id="t" src={logo} onClick={()=>{
+        document.getElementById("fileI").click();
+
+      }}    height="100" width="100"/>
+
+                               </div>
                                    
                                </div>
                                 <div class="form-group row">
@@ -216,7 +233,7 @@ handleAddOrder=()=>{
                          <div class="form-group row">
                          <label for="validationCustom05" class="col-sm-4 col-form-label thandlabel">Starting Work</label>
                                 <div class="col-sm-2">
-                                <input  type="number" class="form-control" id="validationCustom05" value={this.state.StartWorkingHours} onChange={this.StartWorkingHours} style={{width:200}}  required></input></div>
+                                <input  type="number" class="form-control" id="validationCustom05" value={this.state.StartWorkingHours} onChange={this.handleStartWorkingHours} style={{width:200}}  required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -225,7 +242,7 @@ handleAddOrder=()=>{
                                     </div>
                                     <label for="validationCustom06" class="col-sm-2 col-form-label thandlabel">Ending Work</label>
                                 <div class="col-sm-4">
-                                <input  type="number" class="form-control" id="validationCustom06" value={this.state.EndWorkingHours} onChange={this.EndWorkingHours} style={{width:200}}  required></input></div>
+                                <input  type="number" class="form-control" id="validationCustom06" value={this.state.EndWorkingHours} onChange={this.handleEndWorkingHours} style={{width:200}}  required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -268,7 +285,8 @@ handleAddOrder=()=>{
                          </div>
                          
                         </form>
-                         <input type="button"  class="btn btn-success inputtbtn" value="Save"></input>
+                         <input type="button"  class="btn btn-success inputtbtn" onClick={ this.handleAddrestaurant}  value="Save"></input>
+                         <input type="button" value="save" onClick={()=>this.saveImage()}/>
                         </>
                     }
                        
