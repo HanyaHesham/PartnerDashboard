@@ -10,7 +10,7 @@ class Restaurant extends React.Component {
 
     state = {
       RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:0,EndWorkingHours:0,Date:"",MaxDeliveryTime:0,AddressID:1,
-      PartenerID:1,
+      PartenerID:2,
       fd:new FormData() 
     }
     
@@ -34,7 +34,7 @@ class Restaurant extends React.Component {
 
  saveImage=()=>{
 
-  axios.post("https://localhost:44327/api/imagestore",this.state.fd).then(
+  axios.post("https://localhost:44327/api/AddImage",this.state.fd).then(
     (res)=>{
       console.log(res.data)
     }
@@ -124,16 +124,28 @@ handleAddrestaurant=()=>{
       
     }
     const paramss = new URLSearchParams()
-    paramss.append( 'RestaurantName',this.state.RestaurantName)
-    paramss.append('HotLine', this.state.HotLine)
-    paramss.append( 'Description', this.state.Description)
-    paramss.append( 'WebSite', this.state.WebSite)
-    paramss.append('StartWorkingHours', this.state.StartWorkingHours)
-    paramss.append('EndWorkingHours', this.state.EndWorkingHours)
-    paramss.append('Date', this.state.Date)
-    paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
-    paramss.append('PartenerID', this.state.PartenerID)
-    paramss.append('AddressID', this.state.AddressID)
+    
+    // this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+    // paramss.append('HotLine', this.state.HotLine)
+    // paramss.append( 'Description', this.state.Description)
+    // paramss.append( 'WebSite', this.state.WebSite)
+    // paramss.append('StartWorkingHours', this.state.StartWorkingHours)
+    // paramss.append('EndWorkingHours', this.state.EndWorkingHours)
+    // paramss.append('Date', this.state.Date)
+    // paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+    // paramss.append('PartenerID', this.state.PartenerID)
+    // paramss.append('AddressID', this.state.AddressID)
+    
+    this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+    this.state.fd.append('HotLine', this.state.HotLine)
+    this.state.fd.append( 'Description', this.state.Description)
+    this.state.fd.append( 'WebSite', this.state.WebSite)
+    this.state.fd.append('StartWorkingHours', this.state.StartWorkingHours)
+    this.state.fd.append('EndWorkingHours', this.state.EndWorkingHours)
+    this.state.fd.append('Date', this.state.Date)
+    this.state.fd.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+    this.state.fd.append('PartenerID', this.state.PartenerID)
+    this.state.fd.append('AddressID', this.state.AddressID)
     console.log(paramss)
     let URLL=`https://localhost:44327/api/Restdashborad`
     axios.post(URLL,paramss,config).then(res=>{
@@ -151,20 +163,11 @@ handleAddrestaurant=()=>{
        
         return ( 
                <>
-<<<<<<< Updated upstream
-            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100}}>
+             
+            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100  ,marginleft:2500,padding:1 ,height:1000}}>
                 <h3>FoodAway</h3>
                 <hr></hr>               
                 <div class="row" >                       
-=======
-            <div class="container shadow p-3 mb-5 bg-white rounded" >
-
-                <h3>Talbat</h3>
-                <hr></hr>
-               
-                <div class="row" >
-                       
->>>>>>> Stashed changes
                      <div class="col col-md-12">
                          {
                            <>
@@ -281,7 +284,7 @@ handleAddrestaurant=()=>{
                          
                         </>
                     }
-
+<button onClick={this.saveImage}>save</button>
                     </div>
                 </div>
             </div>
