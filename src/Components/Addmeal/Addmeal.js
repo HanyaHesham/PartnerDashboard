@@ -1,7 +1,7 @@
 import React from 'react';
 import './Addmeal.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSmile, faAngleDown, faAngleUp, faPlus, faMinus, faUtensils,faHome ,facutlery} from "@fortawesome/free-solid-svg-icons";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { faSmile, faAngleDown, faAngleUp, faPlus, faMinus, faUtensils,faHome ,facutlery} from "@fortawesome/free-solid-svg-icons";
 
 export default class AddMeal extends React.Component{
     state={

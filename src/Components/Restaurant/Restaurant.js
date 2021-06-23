@@ -2,20 +2,44 @@ import React from 'react';
 import './Restaurant.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSmile, faUtensils,faHome,faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import logo from './1.jpg'
 import axios from 'axios';
 
 
 class Restaurant extends React.Component {
 
     state = {
-      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:"",EndWorkingHours:"",Date:"",MaxDeliveryTime:"",AddressID:"",
-      PartenerID:""
+      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:0,EndWorkingHours:0,Date:"",MaxDeliveryTime:0,AddressID:1,
+      PartenerID:2,
+      fd:new FormData() 
     }
     
     componentDidMount() {
         //this.setState({Rest:this.state.Rest})
+
     }
 
+
+    change=()=>{
+      var file = document.getElementById("fileI").files[0]; 
+      var reader=new FileReader();
+      this.state.fd.append('file',file,file.name);
+      reader.readAsDataURL(file);
+      reader.onload=readerEvent=>{
+      var content = readerEvent.target.result;
+      document.getElementById("t").src = content;
+}
+   
+ }
+
+ saveImage=()=>{
+
+  axios.post("https://localhost:44327/api/AddImage",this.state.fd).then(
+    (res)=>{
+      console.log(res.data)
+    }
+  )
+}
     handleRestaurantName=(e)=>{
       this.state.RestaurantName=e.target.value
      this.setState({
@@ -86,16 +110,10 @@ handleMaxDeliveryTime=(e)=>{
  })
  console.log(this.state.MaxDeliveryTime)
 }
-handleAddressID=(e)=>{
-  this.state.AddressID=e.target.value
- this.setState({
-  AddressID:this.state.AddressID
- })
- console.log(this.state.AddressID)
-}
 
 
-handleAddOrder=()=>{
+
+handleAddrestaurant=()=>{
       
        
   const config = {
@@ -106,19 +124,32 @@ handleAddOrder=()=>{
       
     }
     const paramss = new URLSearchParams()
-    paramss.append( 'RestaurantName',this.state.RestaurantName)
-    paramss.append('HotLine', this.state.HotLine)
-    paramss.append( 'Description', this.state.Description)
-    paramss.append( 'WebSite', this.state.WebSite)
-    paramss.append('StartWorkingHours', this.state.StartWorkingHours)
-    paramss.append('EndWorkingHours', this.state.EndWorkingHours)
-    paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
-    paramss.append('PartenerID', this.state.PartenerID)
-    paramss.append('AddressID', this.state.AddressID)
-
-    let URLL=`https://localhost:44327/api/Restaurants`
+    
+    // this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+    // paramss.append('HotLine', this.state.HotLine)
+    // paramss.append( 'Description', this.state.Description)
+    // paramss.append( 'WebSite', this.state.WebSite)
+    // paramss.append('StartWorkingHours', this.state.StartWorkingHours)
+    // paramss.append('EndWorkingHours', this.state.EndWorkingHours)
+    // paramss.append('Date', this.state.Date)
+    // paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+    // paramss.append('PartenerID', this.state.PartenerID)
+    // paramss.append('AddressID', this.state.AddressID)
+    
+    this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+    this.state.fd.append('HotLine', this.state.HotLine)
+    this.state.fd.append( 'Description', this.state.Description)
+    this.state.fd.append( 'WebSite', this.state.WebSite)
+    this.state.fd.append('StartWorkingHours', this.state.StartWorkingHours)
+    this.state.fd.append('EndWorkingHours', this.state.EndWorkingHours)
+    this.state.fd.append('Date', this.state.Date)
+    this.state.fd.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+    this.state.fd.append('PartenerID', this.state.PartenerID)
+    this.state.fd.append('AddressID', this.state.AddressID)
+    console.log(paramss)
+    let URLL=`https://localhost:44327/api/Restdashborad`
     axios.post(URLL,paramss,config).then(res=>{
-
+           console.log(paramss)
         console.log(res)
         
     }).catch(error=>{
@@ -132,7 +163,8 @@ handleAddOrder=()=>{
        
         return ( 
                <>
-            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100}}>
+             
+            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100  ,marginleft:2500,padding:1 ,height:1000}}>
                 <h3>FoodAway</h3>
                 <hr></hr>               
                 <div class="row" >                       
@@ -143,7 +175,11 @@ handleAddOrder=()=>{
                         <div class="form-group row">                               
                                 <label for="validationCustom011" class="col-sm-4 col-form-label thandlabel">Image</label>
                                 <div class="col-sm-8">
-                                <input type="file" id="validationCustom011" ></input>
+                                <input id='fileI' type="file" name="file"  style={{display: 'none'}} onChange={()=>this.change()}/>
+      <img id="t" src={logo} onClick={()=>{
+        document.getElementById("fileI").click();
+
+      }}    height="100" width="100"/>
                                 </div>                                 
                                </div>
                            
@@ -158,6 +194,7 @@ handleAddOrder=()=>{
                                      Please add a name.
                                     </div>
                                </div>                            
+                               
                                
                                 <div class="form-group row">
                                 <label for="validationCustom02" class="col-sm-4 col-form-label thandlabel">Restaurant Description</label>
@@ -196,7 +233,7 @@ handleAddOrder=()=>{
                          <div class="form-group row">
                          <label for="validationCustom05" class="col-sm-4 col-form-label thandlabel">Starting Work</label>
                                 <div class="col-sm-2">
-                                <input  type="number" class="form-control" id="validationCustom05" value={this.state.StartWorkingHours} onChange={this.StartWorkingHours} style={{width:200}}  required></input></div>
+                                <input  type="number" class="form-control" id="validationCustom05" value={this.state.StartWorkingHours} onChange={this.handleStartWorkingHours} style={{width:200}}  required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -205,8 +242,7 @@ handleAddOrder=()=>{
                                     </div>
                                     <label for="validationCustom06" class="col-sm-2 col-form-label thandlabel">Ending Work</label>
                                 <div class="col-sm-4">
-                                  <input  type="number" class="form-control" id="validationCustom06" value={this.state.EndWorkingHours} onChange={this.EndWorkingHours} style={{width:200}}  required></input>
-                                </div>
+                                <input  type="number" class="form-control" id="validationCustom06" value={this.state.EndWorkingHours} onChange={this.handleEndWorkingHours} style={{width:200}}  required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -236,28 +272,19 @@ handleAddOrder=()=>{
                                      Please add a Max Delivery.
                                     </div>
                          </div>
-                         <div class="form-group row">
-                         <label for="validationCustom09" class="col-sm-4 col-form-label thandlabel">Address Id</label>
-                                <div class="col-sm-8">
-                                <input  type="number" class="form-control" id="validationCustom09" value={this.state.AddressID} onChange={this.handleAddressID}   required></input></div>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                     </div>
-                                     <div class="invalid-feedback">
-                                     Please add a Max Delivery.
-                                    </div>
-                         </div>
+                         
 
                          <div class="form-group row justify-content-center">
                              <div class="col-sm-8 ">
-                             <input type="button" class="btn btn-success inputtbtn" value="Save"></input>
+                             <input type="button" class="btn btn-success inputtbtn" onClick={ this.handleAddrestaurant}  value="Save"></input>
                              </div>
                          </div>
                         </form>
-
-                         </>
+                        
+                         
+                        </>
                     }
-
+<button onClick={this.saveImage}>save</button>
                     </div>
                 </div>
             </div>
