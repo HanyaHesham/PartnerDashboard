@@ -6,11 +6,11 @@ import logo from './1.jpg'
 import axios from 'axios';
 
 
-class Tgrba extends React.Component {
+class Restaurant extends React.Component {
 
     state = {
-      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:"",EndWorkingHours:"",Date:"",MaxDeliveryTime:"",AddressID:"",
-      PartenerID:"1",
+      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:0,EndWorkingHours:0,Date:"",MaxDeliveryTime:0,AddressID:1,
+      PartenerID:1,
       fd:new FormData() 
     }
     
@@ -110,13 +110,7 @@ handleMaxDeliveryTime=(e)=>{
  })
  console.log(this.state.MaxDeliveryTime)
 }
-handleAddressID=(e)=>{
-  this.state.AddressID=e.target.value
- this.setState({
-  AddressID:this.state.AddressID
- })
- console.log(this.state.AddressID)
-}
+
 
 
 handleAddrestaurant=()=>{
@@ -136,11 +130,12 @@ handleAddrestaurant=()=>{
     paramss.append( 'WebSite', this.state.WebSite)
     paramss.append('StartWorkingHours', this.state.StartWorkingHours)
     paramss.append('EndWorkingHours', this.state.EndWorkingHours)
+    paramss.append('Date', this.state.Date)
     paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
     paramss.append('PartenerID', this.state.PartenerID)
     paramss.append('AddressID', this.state.AddressID)
     console.log(paramss)
-    let URLL=`https://localhost:44327/api/Restaurants`
+    let URLL=`https://localhost:44327/api/Restdashborad`
     axios.post(URLL,paramss,config).then(res=>{
            console.log(paramss)
         console.log(res)
@@ -154,37 +149,17 @@ handleAddrestaurant=()=>{
 
     render() {
        
-        return (
+        return ( 
                <>
-         
-        
-            <div class="container shadow p-3 mb-5 bg-white rounded" >
-
-                <h3>Talbat</h3>
-                <hr></hr>
-               
-                <div class="row" >
-                       
+            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100}}>
+                <h3>FoodAway</h3>
+                <hr></hr>               
+                <div class="row" >                       
                      <div class="col col-md-12">
                          {
                            <>
                         <form class="needs-validation" novalidate>
-                           
-                        <div class="form-group row">
-                       
-                                <label for="validationCustom01" class="col-sm-4 col-form-label thandlabel">Restaurant Name</label>
-                                <div class="col-sm-8">
-                                <input type="text" class="form-control inputt" id="validationCustom01"style={{width:500}} value={this.state.RestaurantName} onChange={this.handleRestaurantName} required></input></div>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                     </div>
-                                     <div class="invalid-feedback">
-                                     Please add a name.
-                                    </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                
+                        <div class="form-group row">                               
                                 <label for="validationCustom011" class="col-sm-4 col-form-label thandlabel">Image</label>
                                 <div class="col-sm-8">
                                 <input id='fileI' type="file" name="file"  style={{display: 'none'}} onChange={()=>this.change()}/>
@@ -192,14 +167,26 @@ handleAddrestaurant=()=>{
         document.getElementById("fileI").click();
 
       }}    height="100" width="100"/>
-
+                                </div>                                 
                                </div>
-                                   
-                               </div>
+                           
+                        <div class="form-group row">                      
+                                <label for="validationCustom01" class="col-sm-4 col-form-label thandlabel">Restaurant Name</label>
+                                <div class="col-sm-8">
+                                <input type="text" class="form-control inputt" id="validationCustom01" value={this.state.RestaurantName} onChange={this.handleRestaurantName} required></input></div>
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                     </div>
+                                     <div class="invalid-feedback">
+                                     Please add a name.
+                                    </div>
+                               </div>                            
+                               
+                               
                                 <div class="form-group row">
                                 <label for="validationCustom02" class="col-sm-4 col-form-label thandlabel">Restaurant Description</label>
                                 <div class="col-sm-8">
-                                <input  type="textarea" name="text" class="form-control inputtt" id="validationCustom02" value={this.state.Description} onChange={this.handleDescription} style={{width:500}}  required/></div>
+                                <textarea name="text" class="form-control inputtt" id="validationCustom02" value={this.state.Description} onChange={this.handleDescription}   required></textarea></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -210,7 +197,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                          <label for="validationCustom03" class="col-sm-4 col-form-label thandlabel">HotLine</label>
                                 <div class="col-sm-8">
-                                <input  type="number" class="form-control" id="validationCustom03" style={{width:500}} value={this.state.HotLine} onChange={this.handleHotLine} required></input></div>
+                                <input  type="number" class="form-control" id="validationCustom03"  value={this.state.HotLine} onChange={this.handleHotLine} required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -221,7 +208,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                          <label for="validationCustom04" class="col-sm-4 col-form-label thandlabel">Website</label>
                                 <div class="col-sm-8">
-                                <input  type="text" class="form-control" id="validationCustom04" value={this.state.WebSite} onChange={this.handleWebSite} style={{width:500}}  required></input></div>
+                                <input  type="text" class="form-control" id="validationCustom04" value={this.state.WebSite} onChange={this.handleWebSite}   required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -253,7 +240,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                          <label for="validationCustom07" class="col-sm-4 col-form-label thandlabel">Date</label>
                                 <div class="col-sm-8">
-                                <input  type="date" class="form-control" id="validationCustom07" value={this.state.Date} onChange={this.handleDate} style={{width:500}}  required></input></div>
+                                <input  type="date" class="form-control" id="validationCustom07" value={this.state.Date} onChange={this.handleDate}   required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -264,18 +251,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                          <label for="validationCustom08" class="col-sm-4 col-form-label thandlabel">Max Delivery</label>
                                 <div class="col-sm-8">
-                                <input  type="number" class="form-control" id="validationCustom08" value={this.state.MaxDeliveryTime} onChange={this.handleMaxDeliveryTime} style={{width:500}}  required></input></div>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                     </div>
-                                     <div class="invalid-feedback">
-                                     Please add a Max Delivery.
-                                    </div>
-                         </div>
-                         <div class="form-group row">
-                         <label for="validationCustom09" class="col-sm-4 col-form-label thandlabel">Address Id</label>
-                                <div class="col-sm-8">
-                                <input  type="number" class="form-control" id="validationCustom09" value={this.state.AddressID} onChange={this.handleAddressID} style={{width:500}}  required></input></div>
+                                <input  type="number" class="form-control" id="validationCustom08" value={this.state.MaxDeliveryTime} onChange={this.handleMaxDeliveryTime}   required></input></div>
                                     <div class="valid-feedback">
                                       Looks good!
                                      </div>
@@ -284,14 +260,18 @@ handleAddrestaurant=()=>{
                                     </div>
                          </div>
                          
+
+                         <div class="form-group row justify-content-center">
+                             <div class="col-sm-8 ">
+                             <input type="button" class="btn btn-success inputtbtn" onClick={ this.handleAddrestaurant}  value="Save"></input>
+                             </div>
+                         </div>
                         </form>
-                         <input type="button"  class="btn btn-success inputtbtn" onClick={ this.handleAddrestaurant}  value="Save"></input>
-                         <input type="button" value="save" onClick={()=>this.saveImage()}/>
+                        
+                         
                         </>
                     }
-                       
 
-                        
                     </div>
                 </div>
             </div>
@@ -301,4 +281,4 @@ handleAddrestaurant=()=>{
 
 }
 
-export default Tgrba;
+export default Restaurant;
