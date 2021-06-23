@@ -1,17 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-
 import reportWebVitals from './reportWebVitals';
-//import Tgrba from './Components/Restaurant/Restaurant'
-//import AddMreal from './Components/Addmeal/Addmeal'
-import Slidebar from './Components/Slidebar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import AppRouter from './components/Router/AppRouter';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Slidebar />
+    <AppRouter />
   </React.StrictMode>,
   document.getElementById('root')
 );
