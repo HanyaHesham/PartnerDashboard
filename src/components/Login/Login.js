@@ -30,7 +30,9 @@ export default class Login extends React.Component{
     }
     componentDidMount(){
     }
-    
+    clickk=()=>{
+        this.props.history.push('AppRouter')
+    }
     render(){
         return(
             <div class="container shadow col-8 col-lg-4" id="cont1">
