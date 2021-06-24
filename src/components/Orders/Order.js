@@ -5,7 +5,7 @@ import './Order.css';
 
 export default class Order extends React.Component{
     state={
-        RestId:2,
+        RestId:1,
         RestOrders:[],
         RestMealOrders:[]
     }
@@ -42,9 +42,9 @@ export default class Order extends React.Component{
                         <table className="table table-hover">
                         <thead className="thead-light">
                                       <tr>
-                                      <th scope="col">Order Time</th>
-                                      <th scope="col">Order SubTotal</th>
-                                      <th scope="col">Payment Method</th>
+                                        <th scope="col">Order Time</th>
+                                        <th scope="col">Order SubTotal</th>
+                                        <th scope="col">Payment Method</th>
                                       </tr>
                         </thead>
                         <tbody>                      
