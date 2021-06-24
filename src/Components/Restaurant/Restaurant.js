@@ -2,7 +2,7 @@ import React from 'react';
 import './Restaurant.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSmile, faUtensils,faHome,faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import logo from './1.jpg'
+import logo from '../../images/add-image.jpg'
 import axios from 'axios';
 
 
@@ -164,8 +164,8 @@ handleAddrestaurant=()=>{
         return ( 
                <>
              
-            <div class="container shadow p-3 mb-5 bg-white rounded">
-                <h3>FoodAway</h3>
+            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginTop:50}}>
+                <h2 style={{color:"brown", textAlign:'center'}}>Add Your Restaurant</h2>
                 <hr></hr>               
                 <div class="row" >                       
                      <div class="col col-md-12">
@@ -176,10 +176,10 @@ handleAddrestaurant=()=>{
                                 <label for="validationCustom011" class="col-sm-4 col-form-label thandlabel">Image</label>
                                 <div class="col-sm-8">
                                 <input id='fileI' type="file" name="file"  style={{display: 'none'}} onChange={()=>this.change()}/>
-      <img id="t" src={logo} onClick={()=>{
-        document.getElementById("fileI").click();
+                                <img id="t" style={{cursor:'pointer'}} src={logo} onClick={()=>{
+                                  document.getElementById("fileI").click();
 
-      }}    height="100" width="100"/>
+                                }} height="100" width="100"/>
                                 </div>                                 
                                </div>
                            
@@ -273,10 +273,10 @@ handleAddrestaurant=()=>{
                                     </div>
                          </div>
                          
-
-                         <div class="form-group row justify-content-center">
-                             <div class="col-sm-8 ">
-                             <input type="button" class="btn btn-success inputtbtn" onClick={ this.handleAddrestaurant}  value="Save"></input>
+                         <div class="form-group row">
+                            <label htmlFor="button" class="col-sm-4 col-form-label thandlabel"></label>
+                             <div class="col-sm-8">
+                             <input type="button" class="btn btn-success inputt form-control" onClick={ this.handleAddrestaurant}  value="Save"></input>
                              </div>
                          </div>
                         </form>
