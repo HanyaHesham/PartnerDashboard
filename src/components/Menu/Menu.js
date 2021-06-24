@@ -161,11 +161,12 @@ export default class Menu extends React.Component{
     render(){
         return(
           
-            <div className="container  row shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
-              <div className="container row ">
-              <h2 style={{color:"brown"}}>My Menu Items </h2>
+            <div className="container   shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
+               <h2 style={{color:"brown"}}>My Menu Items </h2>
            
-              <hr></hr>
+              <hr/>
+              <div className="container row ">
+             
                 <div className="col-4 categories" >
                     <div className="row">
                     <h3 className="col-7">Categories</h3>
@@ -199,7 +200,7 @@ export default class Menu extends React.Component{
                                  return(    
                                     <div  className="row">
                                             <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Name}  </li>
-                                            <button className="close col-3" aria-label="Close"  onClick={()=>this.DeleteCategory(cat.CategoryId)}>
+                                            <button className="col-3 bg-transparent"   style={{cursor:"pointer",border:"none"}} onClick={()=>this.DeleteCategory(cat.CategoryId)}>
                                             <FontAwesomeIcon  icon={faTrash} style={{color:"red"}} />
                                             </button>
                                     </div>   
@@ -209,7 +210,7 @@ export default class Menu extends React.Component{
                     </ul>
                 </div>
                
-                <div className="col-8 meals">
+                <div className="col-7 meals">
                     <div>
                         <div></div>
                         <Link  to={{pathname:`/HanyaHesham/PartnerDashboard/AddMeal/${this.state.Categoryid}` ,selectedCategory:this.state.Categoryid}} className="btn" id="addmealbtn"  >Add new Meal <FontAwesomeIcon  icon={faPlus} /></Link>
@@ -240,10 +241,29 @@ export default class Menu extends React.Component{
                   
                 </div>
                 </div>
-                <div className="row">
-                <h3 className="col-7">Cusines</h3>
-                <button className="col-3" onClick={this.handleshow}>addcusine</button>
-                <Modal show={this.state.showmodal} onHide={this.handleClosemodal} >
+                <div className="row ml-1" >
+                  <div className="col-8">
+                <h3 >Cusines</h3>
+                <ul>
+                            {   this.state.Cusine.map((cat,i)=>{
+                       
+                       return(    
+                       
+                                
+                                  <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Cuisine.CuisineName}  </li>
+                                 
+                             
+                          
+                          )
+                  })
+              }
+               </ul>
+               </div>
+            
+               <div  className="col-3" >
+               <button id="cusinbtn" className="btn" onClick={this.handleshow}style={{fontWeight:"bold"}}> Add ciusine <FontAwesomeIcon  icon={faPlus} /></button>
+               </div>
+               <Modal show={this.state.showmodal} onHide={this.handleClosemodal} >
                                 <Modal.Body> 
                                 <button className="close" onClick={this.handleClosemodal} aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -264,21 +284,9 @@ export default class Menu extends React.Component{
                                 </Modal.Body>
                           
                             </Modal>
-                            {   this.state.Cusine.map((cat,i)=>{
-                       
-                       return(    
-                          <div  className="row">
-                                  <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Cuisine.CuisineName}  </li>
-                                  {/* <button className="close col-3" aria-label="Close"  onClick={()=>this.DeleteCategory(cat.CategoryId)}>
-                                  <FontAwesomeIcon  icon={faTrash} style={{color:"red"}} />
-                                  </button> */}
-                          </div>   
-                          )
-                  })
-              }
-                </div>
-
             </div>
+           
+                </div>
           
         )
     }
