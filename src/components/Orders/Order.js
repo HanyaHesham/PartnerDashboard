@@ -32,8 +32,8 @@ export default class Order extends React.Component{
     render(){
         return(
             <>
-            <div className="container shadow p-3 mb-5 bg-white rounded MyContainer">
-                <h3> Orders Done Successfully From Your Restaurant</h3>
+            <div className="container shadow p-3 mb-5 bg-white rounded MyContainer" style={{marginTop:50}}>
+            <h2 style={{color:"brown", textAlign:'center'}}>Orders Done Successfully From Your Restaurant</h2>
                 <hr></hr>
 
                 <div className="Row col col-md-12">
