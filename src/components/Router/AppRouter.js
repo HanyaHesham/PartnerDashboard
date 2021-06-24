@@ -20,13 +20,14 @@ export default class AppRouter extends React.Component{
                 <Header/>
 
                 <switch>
-                    <Route component={Profile} path={StaticRoute} exact></Route>
-                    <Route component={Profile} path={`${StaticRoute}Profile`} exact></Route>
+                    <Route component={Login} path={StaticRoute} exact></Route>
+                    <Route component={Login} path={`${StaticRoute}Login`} exact></Route>
                     <Route component={Restaurant} path={`${StaticRoute}Restaurant`} exact></Route>
                     <Route component={AddMeal} path={`${StaticRoute}AddMeal/:id`} exact></Route>
                     <Route component={Order} path={`${StaticRoute}Orders`} exact></Route> 
                     <Route component={Menu} path={`${StaticRoute}Menu`} exact></Route>
-                    <Route component={Login} path={`${StaticRoute}Login`} exact></Route>
+                    <Route component={Profile} path={`${StaticRoute}Profile`} exact></Route>
+
 
 
                 </switch>
