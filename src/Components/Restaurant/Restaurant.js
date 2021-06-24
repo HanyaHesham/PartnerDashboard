@@ -28,7 +28,7 @@ class Restaurant extends React.Component {
       reader.onload=readerEvent=>{
       var content = readerEvent.target.result;
       document.getElementById("t").src = content;
-}
+    }
    
  }
 
@@ -111,6 +111,37 @@ handleMaxDeliveryTime=(e)=>{
  console.log(this.state.MaxDeliveryTime)
 }
 
+saveImage=()=>{
+  
+  this.state.fd.append('person',JSON.stringify(
+    {
+    RestaurantName:this.state.RestaurantName,
+    HotLine:this.state.HotLine,
+    Description:this.state.Description,
+    WebSite:this.state.WebSite,
+    StartWorkingHours:this.state.StartWorkingHours,
+    EndWorkingHours:this.state.EndWorkingHours,
+    Date:this.state.Date,
+    MaxDeliveryTime:this.state.MaxDeliveryTime,
+    PartenerID:this.state.PartenerID,
+    AddressID:this.state.AddressID
+    }
+      )
+    
+    );
+  axios.post("https://localhost:44327/api/Image/select",this.state.fd).then(
+    (res)=>{
+      this.state.imgFlage=res.data
+      this.setState({
+        imgFlage:this.state.imgFlage
+      })
+      this.state.fd=new FormData()
+      this.setState({
+        fd:this.state.fd
+      })
+    }
+  )
+}
 
 
 handleAddrestaurant=()=>{
@@ -276,7 +307,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                             <label htmlFor="button" class="col-sm-4 col-form-label thandlabel"></label>
                              <div class="col-sm-8">
-                             <input type="button" class="btn btn-success inputt form-control" onClick={ this.handleAddrestaurant}  value="Save"></input>
+                             <input type="button" class="btn btn-success inputt form-control" onClick={ this.saveImage}  value="Save"></input>
                              </div>
                          </div>
                         </form>
@@ -284,7 +315,6 @@ handleAddrestaurant=()=>{
                          
                         </>
                     }
-<button onClick={this.saveImage}>save</button>
                     </div>
                 </div>
             </div>
