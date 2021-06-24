@@ -35,13 +35,13 @@ export default class Header  extends React.Component{
                                     <FontAwesomeIcon  icon={faHome} /></i> Restaurant  </Link>
                 </li>
                 &nbsp; &nbsp;    &nbsp; &nbsp;
-                <li class="nav-item">
+                <li class="nav-item nvitem">
                         <Link class="nav-link" to="/HanyaHesham/PartnerDashboard/Menu"><i class="fas">
                                     <FontAwesomeIcon  icon={faUtensils} /></i> Menu </Link> 
                 </li>
               
                 &nbsp; &nbsp;    &nbsp; &nbsp;
-                <li class="nav-item">
+                <li class="nav-item nvitem">
                         <Link class="nav-link" to="/HanyaHesham/PartnerDashboard/Orders"><i class="fas">
                                     <FontAwesomeIcon  icon={faShoppingCart} /></i> Orders </Link>
                 </li>
