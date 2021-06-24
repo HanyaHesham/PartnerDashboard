@@ -221,7 +221,7 @@ export default class Menu extends React.Component{
                                  return(     
                         <div class="row">
                                 <div class="col-lg-2 col-md-3 col-sm-5">
-                                    <img class="card shadow-sm p-2 mb-2 bg-white rounded" height="60" width="60" src="images/food.jpg" />
+                                    <img class="card shadow-sm p-2 mb-2 bg-white rounded" height="60" width="60" src={Meal.Image} />
                                 </div>
                                 <div class="col-lg-6 col-md-9 col-sm-7" style={{marginbottom:10}}>
                                     <span class="h5">{Meal.Mealname}</span><br />

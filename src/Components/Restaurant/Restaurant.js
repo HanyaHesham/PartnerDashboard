@@ -1,7 +1,5 @@
 import React from 'react';
 import './Restaurant.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSmile, faUtensils,faHome,faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from '../../images/add-image.jpg'
 import axios from 'axios';
 
