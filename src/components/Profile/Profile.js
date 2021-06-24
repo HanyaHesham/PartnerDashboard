@@ -4,50 +4,45 @@ import axios from 'axios';
 export default class Profile extends React.Component{
     state={
         partner:{},
-        PartnerId:1,
-        FirstName:"",
-        LastName:"",
-        Username:"",
-        Email:"",
-        Password:"",
-        CPassword:"",
-        partnerInfo:[]
-    }
-    componentDidMount(){
-        // this.getPartnerDetails();
+        PartenerId:JSON.parse(localStorage.getItem('Partner')).PartenerId,
     }
 
-    // getPartnerDetails(){
-    //     axios.get(`https://localhost:44327/api/partnerDetails/${this.state.partnerId}`).then(res=>{
-    //         this.setState({partnerInfo:res.data})
-    //         console.log(res.data);
-    //     });
-    // }
+    componentDidMount(){
+        this.getPartnerDetails()
+    }
+
+    getPartnerDetails(){
+        axios.get(`https://localhost:44327/api/Partner/${this.state.PartenerId}`).then(res=>{
+            this.setState({partner:res.data})
+            console.log(res.data);
+        });
+    }
+
 
     setUsernameState=(e)=>{
         this.state.partner.Username=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({Username:this.state.partner.Username});
     }
 
     setFnameState=(e)=>{
         this.state.partner.FirstName=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({FirstName:this.state.partner.FirstName});
     }
     setLnameState=(e)=>{
         this.state.partner.LastName=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({LastName:this.state.partner.LastName});
     }
     setEmailState=(e)=>{
         this.state.partner.Email=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({Email:this.state.partner.Email});
     }
     setPasswordState=(e)=>{
         this.state.partner.Password=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({Password:this.state.partner.Password});
     }
     setCPasswordState=(e)=>{
         this.state.partner.CPassword=e.target.value
-        this.setState({partner:this.state.partner});
+        this.setState({CPassword:this.state.partner.CPassword});
     }
 
     customEdit=()=>{
@@ -59,20 +54,25 @@ export default class Profile extends React.Component{
           }
 
           const params=new URLSearchParams();
-          params.append('PartnerId', this.state.partner.PartnerId)
+          params.append('PartenerId', this.state.partner.PartenerId)
           params.append('Username', this.state.partner.Username)
           params.append('FirstName', this.state.partner.FirstName)
           params.append('LastName', this.state.partner.LastName)
           params.append('Email', this.state.partner.Email)
           params.append('Password', this.state.partner.Password)
           params.append('CPassword', this.state.partner.CPassword)
+          params.append('Approval', 1)
 
-          let URL=`https://localhost:44327/api/editPartner/${this.state.PartnerId}`
+
+
+          let URL=`https://localhost:44327/api/editPartner/${this.state.partner.PartenerId}`
 
           axios.post(URL, params, config).then(res=>{
               console.log(res);             
           })
-          .catch(console.error())
+          .catch(error=>{
+            console.log(error)   
+           })
           console.log(this.state.partner);
 
     }
@@ -88,12 +88,11 @@ export default class Profile extends React.Component{
                        
                      <div class="col col-md-12">
                          {                        
-                        <form class="needs-validation" novalidate>
-                                                      
+                        <form class="needs-validation" novalidate>                                                      
                         <div class="form-group row">
                                 <label htmlFor="text" class="col-sm-4 col-form-label thandlabel">Username</label>
                                 <div class="col-sm-8">
-                                <input type="text" className="form-control inputt"  value={this.state.partner.Username|| ''} onChange={(e)=>this.setUsernameState(e)}  disabled></input></div>
+                                <input type="text" className="form-control inputt"  value={this.state.partner.Username|| ''} onChange={(e)=>this.setUsernameState(e)}></input></div>
                          </div>
 
                          <div class="form-group row">
