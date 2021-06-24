@@ -86,9 +86,8 @@ export default class Login extends React.Component{
                 this.setState({Partner:res.data});
                 console.log(this.state.Partner);
                 localStorage.setItem('Partner',JSON.stringify(res.data));
-                this.props.history.push('/HanyaHesham/PartnerDashboard/Profile');
-                 window.location.reload(false);            
-
+                this.props.history.push('/HanyaHesham/PartnerDashboard/Profile')
+                window.location.reload(false);
 
             }).catch(err=>{
                 alert("plaese Enter correct Data");
