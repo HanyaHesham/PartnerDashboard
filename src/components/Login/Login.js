@@ -38,7 +38,7 @@ export default class Login extends React.Component{
             <div class="container shadow col-8 col-lg-4" id="cont1">
             <div class="classRow row justify-content-center ">
                 <div>
-                    <div class="card shadow-lg border-0 rounded-lg mt-5" id="cardd">
+                    <div class="card shadow-lg border-0 rounded-lg " id="cardd">
                         <div class="card-body bg-transparent">
                         <div class="card-header " id="card-header">
                         <h1 class="text-center font-weight-light my-4" id="card-header-text">Welcome !</h1>
