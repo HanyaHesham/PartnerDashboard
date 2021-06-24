@@ -1,6 +1,5 @@
 import React from 'react';
 import{BrowserRouter as Router,Route} from 'react-router-dom';
-//import Slidebar from '../Slidebar';
 import Restaurant from './../Restaurant/Restaurant'
 import AddMeal from './../Addmeal/Addmeal';
 import Order from './../Orders/Order';
@@ -18,7 +17,6 @@ export default class AppRouter extends React.Component{
             <>
             <Router>
 
-                {/* <Slidebar/> */}
                 <Header/>
 
                 <switch>

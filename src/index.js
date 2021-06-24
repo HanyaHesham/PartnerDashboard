@@ -1,15 +1,8 @@
 import React from 'react';
-
 import ReactDOM from 'react-dom';
-
 import './index.css';
 
 import reportWebVitals from './reportWebVitals';
-// import AddMreal from './components/Addmeal/Addmeal'
-// import Slidebar from './components/Slidebar';
-// import Tgrba from './components/Restaurant/Restaurant';
-//import Menu from './components/Menu/Menu';
-import Login from './components/Login/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import AppRouter from './components/Router/AppRouter';
