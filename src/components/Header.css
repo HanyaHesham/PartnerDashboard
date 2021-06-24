@@ -1,16 +1,16 @@
 #navbarText{
     text-align: left;
-   
-  
-    
 }
+
 #PartnerNav{
 position: relative;
 padding: 20px;
 }
+
 .nav-item{
     float: right;
 }
+
 .nav-item:hover{
     background-color: orange;
     border-radius: 5px;
