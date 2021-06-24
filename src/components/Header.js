@@ -4,11 +4,19 @@ import {  faUtensils,faHome,faShoppingCart, faUser, faSignOutAlt } from "@fortaw
 import { Link } from 'react-router-dom';
 import './Header.css';
 export default class Header  extends React.Component{
-    state={}
+    state={
+        profileicon:"block",
+    }
+    componentDidMount=()=>{
+            if(localStorage.getItem('Partner') === null){
+               // this.state.profileicon="none";
+                this.setState({profileicon:"none"})
+            }
+    }
 
     render(){
         return(
-            <nav class="navbar navbar-expand navbar-dark bg-dark" id="PartnerNav" >
+            <nav class="navbar navbar-expand navbar-dark bg-dark" id="PartnerNav" style={{display:this.state.profileicon}}>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" ></span>
