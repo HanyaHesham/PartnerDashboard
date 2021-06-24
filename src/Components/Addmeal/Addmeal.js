@@ -101,7 +101,7 @@ export default class AddMeal extends React.Component{
                          
                          <div class="form-group row justify-content-center">
                              <div class="col-sm-8 ">
-                             <input type="button" class="btn btn-success inputtbtn" style={{width:400}} value="Save"></input>
+                             <input type="button" class="btn btn-success inputtbtn" value="Save"></input>
                              </div>
                          </div>
 
