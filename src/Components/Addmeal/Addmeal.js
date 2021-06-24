@@ -16,9 +16,9 @@ export default class AddMeal extends React.Component{
        
         return (
                
-            <div class="container shadow p-3 mb-5 bg-white rounded">
+            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginTop:50}}>
 
-                <h3>FoodAway</h3>
+                <h2 style={{color:"brown", textAlign:'center'}}>Add Meal</h2>
                 <hr></hr>
                
                 <div class="row" >
@@ -99,9 +99,10 @@ export default class AddMeal extends React.Component{
                                     </div>
                          </div>
                          
-                         <div class="form-group row justify-content-center">
-                             <div class="col-sm-8 ">
-                             <input type="button" class="btn btn-success inputtbtn" value="Save"></input>
+                         <div class="form-group row">
+                            <label htmlFor="button" class="col-sm-4 col-form-label thandlabel"></label>
+                             <div class="col-sm-8">
+                             <input type="button" class="btn btn-success inputt form-control"  value="Save"></input>
                              </div>
                          </div>
 
