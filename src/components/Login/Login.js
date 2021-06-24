@@ -57,17 +57,7 @@ export default class Login extends React.Component{
             this.setState({classPass:"invisible",Password:e,disabled:false})
             }
     }
-     GetCutomerID=()=>{
-           axios.get(`https://localhost:44327/api/customer/${this.state.Email}`).then(res=>{
-               console.log(res.data)
-               this.setState({
-                   Customer:res.data.CustomerId
-               })
-               localStorage.setItem('Customer',JSON.stringify(res.data));
-               
-
-           })
-       }
+    
         Login = (props) => {
            
             const config = {
@@ -96,7 +86,8 @@ export default class Login extends React.Component{
                 this.setState({Partner:res.data});
                 console.log(this.state.Partner);
                 localStorage.setItem('Partner',JSON.stringify(res.data));
-                this.props.history.push('/HanyaHesham/PartnerDashboard/Profile')            
+                this.props.history.push('/HanyaHesham/PartnerDashboard/Profile');
+                 window.location.reload(false);            
 
 
             }).catch(err=>{
