@@ -161,7 +161,7 @@ export default class Menu extends React.Component{
     render(){
         return(
           
-            <div className="container   shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
+            <div className="container shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
                <h2 style={{color:"brown"}}>My Menu Items </h2>
            
               <hr/>
@@ -169,8 +169,8 @@ export default class Menu extends React.Component{
              
                 <div className="col-4 categories" >
                     <div className="row">
-                    <h3 className="col-7">Categories</h3>
-                    <button className="btn col-3 " id="AddCatbtn" onClick={this.handleshoww} style={{fontWeight:"bold"}}>Add <FontAwesomeIcon  icon={faPlus} /></button>
+                    <h3 className="col-8">Categories</h3>
+                    <button className="btn col-4" id="AddCatbtn" onClick={this.handleshoww} style={{fontWeight:"bold"}}>Add <FontAwesomeIcon  icon={faPlus} /></button>
                             <Modal show={this.state.show} onHide={this.handleClose} >
                                 <Modal.Body> 
                                 <button className="close" onClick={this.handleClose} aria-label="Close">
@@ -241,8 +241,8 @@ export default class Menu extends React.Component{
                   
                 </div>
                 </div>
-                <div className="row ml-1" >
-                  <div className="col-8">
+                <div className="row ml-3" >
+                  <div className="col-7">
                 <h3 >Cusines</h3>
                 <ul>
                             {   this.state.Cusine.map((cat,i)=>{
@@ -250,7 +250,7 @@ export default class Menu extends React.Component{
                        return(    
                        
                                 
-                                  <li  className="col-8" style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Cuisine.CuisineName}  </li>
+                                  <li   style={{cursor:"pointer"}} onClick={()=>this.handlemeals(cat.CategoryId)}>{cat.Cuisine.CuisineName}  </li>
                                  
                              
                           
@@ -286,7 +286,7 @@ export default class Menu extends React.Component{
                             </Modal>
             </div>
            
-                </div>
+        </div>
           
         )
     }
