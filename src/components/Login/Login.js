@@ -91,7 +91,7 @@ export default class Login extends React.Component{
             axios.post(URL, params, config).then(res=>{
                 console.log(res);
                 this.setState({classMail:"invisible"});               
-               this.props.history.push('Restaurant')              
+               this.props.history.replace('Profile')              
                 console.log(res.data)  
                 this.state.Partner = res.data;
                 this.setState({Partner:res.data});
