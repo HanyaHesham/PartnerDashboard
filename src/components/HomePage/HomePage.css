@@ -4,7 +4,7 @@
 
 #UperDiv{
     background-position: center;
-    background-image: url('../../images/welcome2.jpg');
+    /* background-image: url('../../images/welcome2.jpg'); */
     background-repeat: no-repeat;
     height: 300px;
 }

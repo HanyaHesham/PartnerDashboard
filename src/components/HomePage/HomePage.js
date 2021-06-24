@@ -12,7 +12,7 @@ export default class Home extends React.Component{
                 <hr/>
                 <div className="row justify-content-center">
                     <div>
-                        <h1 style={{textAlign:'center'}}>Welcome to FoodAway Family</h1>
+                        <h1 style={{ color:'white'}}>Welcome to FoodAway Family</h1>
                     </div>
                 </div>
             </div>

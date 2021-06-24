@@ -16,7 +16,7 @@ export default class AddMeal extends React.Component{
        
         return (
                
-            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100}} >
+            <div class="container shadow p-3 mb-5 bg-white rounded">
 
                 <h3>FoodAway</h3>
                 <hr></hr>

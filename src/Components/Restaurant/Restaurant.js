@@ -164,7 +164,7 @@ handleAddrestaurant=()=>{
         return ( 
                <>
              
-            <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginRight:100  ,marginleft:2500,padding:1 ,height:1000}}>
+            <div class="container shadow p-3 mb-5 bg-white rounded">
                 <h3>FoodAway</h3>
                 <hr></hr>               
                 <div class="row" >                       
