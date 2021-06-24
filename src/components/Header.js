@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 export default class Header  extends React.Component{
     state={
-        profileicon:"block",
+        header:"block",
     }
     componentDidMount=()=>{
             if(localStorage.getItem('Partner') === null){
                // this.state.profileicon="none";
-                this.setState({profileicon:"none"})
+                this.setState({header:"none"})
             }
     }
 
     render(){
         return(
-            <nav class="navbar navbar-expand navbar-dark bg-dark" id="PartnerNav" style={{display:this.state.profileicon}}>
+            <nav class="navbar navbar-expand navbar-dark bg-dark" id="PartnerNav" style={{display:this.state.header}}>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" ></span>
@@ -51,8 +51,8 @@ export default class Header  extends React.Component{
                         <Link class="nav-link" to="/HanyaHesham/PartnerDashboard/Login"
                             onClick={()=>{
                                 localStorage.removeItem('Partner')
-                                window.location.reload(false);
-                                this.props.history.replace('/HanyaHesham/PartnerDashboard/Login')
+                               // this.props.history.push('/HanyaHesham/PartnerDashboard/Login');
+
                             }}>
                                 <i class="fas">
                                     <FontAwesomeIcon  icon={faSignOutAlt} /></i> LogOut </Link>
