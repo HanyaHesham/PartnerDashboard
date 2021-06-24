@@ -7,12 +7,31 @@ import {
   faLock, faUser
 } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
+import { swal } from 'sweetalert';
 
 
 export default class Login extends React.Component{
     state={
+        Email:"",
+        Password:"",
         ShowEye:"none",
-        ShowEyeSlash:"block"
+        ShowEyeSlash:"block",
+        classMail:"invisible",
+        classPass:"invisible",
+        passwordtype:"password",
+        Partner:{}
+    }
+    handleEmailChange = (e) =>{
+           const validUserName = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+
+            if(!validUserName.test(e)){
+            this.setState({classMail:"visible",Email:e,disabled:true})
+            }else{
+            this.state.disabled=false
+
+            this.setState({classMail:"invisible",Email:e,disabled:false})
+            
+            }
     }
     showPasswordHandler=()=>{
         if( this.state.passwordtype="password"){
@@ -28,6 +47,72 @@ export default class Login extends React.Component{
          ShowEyeSlash:"block"})
         }
     }
+    handlePasswordChange = (e) =>{
+         const validPassword =  new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
+            if(!validPassword.test(e)){
+            this.setState({classPass:"visible",Password:e,disabled:true})
+            }else{
+                this.state.disabled=false
+            this.setState({classPass:"invisible",Password:e,disabled:false})
+            }
+    }
+     GetCutomerID=()=>{
+           axios.get(`https://localhost:44327/api/customer/${this.state.Email}`).then(res=>{
+               console.log(res.data)
+               this.setState({
+                   Customer:res.data.CustomerId
+               })
+               localStorage.setItem('Customer',JSON.stringify(res.data));
+               
+
+           })
+       }
+        Login = (props) => {
+           
+            const config = {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'Accept':'*/*'
+                }
+              }
+              const configs = {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept':'*/*'
+                }
+              }
+              const params = new URLSearchParams()
+                params.append('Email',this.state.Email)
+                params.append('Password',this.state.Password)
+               // params.append('grant_type', 'password')
+
+        let URL='https://localhost:44327/api/partnerLogin'
+            axios.post(URL, params, config).then(res=>{
+                console.log(res);
+                this.setState({classMail:"invisible"});               
+               this.props.history.push('Restaurant')              
+                console.log(res.data)  
+                this.state.Partner = res.data;
+                this.setState({Partner:res.data});
+                console.log(this.state.Partner);
+                localStorage.setItem('Partner',JSON.stringify(res.data));
+
+            }).catch(err=>{
+                alert("plaese Enter correct Data");
+                // swal.fire({
+                // icon: 'error',
+                // title: 'Oops...',
+                // text: 'Something went wrong!',
+                // footer: '<a href="">Why do I have this issue?</a>'
+                // })
+                //swal("plaese Enter correct Data");
+               console.log(err); 
+               this.setState({classMail:"visible"});
+               // this.state.classMail="visible"
+            }) ;
+           // this.GetCutomerID();
+        }
     componentDidMount(){
     }
     clickk=()=>{
@@ -53,11 +138,11 @@ export default class Login extends React.Component{
                                              <span class="input-group-text inptxt" id="inputGroup-sizing-sm">
                                              <FontAwesomeIcon icon={faUser} />   </span>
                                          </div>
-                                     <input type="text" class="form-control formcntrl" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="email" placeholder="Enter your Username"
+                                     <input type="text" class="form-control formcntrl" aria-label="Small" aria-describedby="inputGroup-sizing-sm" id="email" placeholder="Enter your E-mail"
                                        required 
                                     //    onchange={(Email)=>this.setState({Email})}
                                         onChange={(e)=>this.handleEmailChange(e.target.value)}/>
-                                        <span style={{color: "red"}} class={this.state.classMail} >invalid Username</span>
+                                        <span style={{color: "red"}} class={this.state.classMail} >invalid E-mail</span>
                                     </div>
                                 </div>
                                 <br>
@@ -92,7 +177,7 @@ export default class Login extends React.Component{
                                     {/* </label>                               */}
                                 </div>                           
                                 <button  type="button" id="login" class='mybtn btn btn-primary btn-block mt-3 form-control formcntrl'  
-                                onClick={()=>this.HandleExactData()} disabled={this.state.disabled} >Login</button>
+                                onClick={()=>this.Login()} disabled={this.state.disabled} >Login</button>
                             </form>
                         </div>
                          <div class="card-footer text-center"  id="gotoregister">
