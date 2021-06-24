@@ -91,12 +91,13 @@ export default class Login extends React.Component{
             axios.post(URL, params, config).then(res=>{
                 console.log(res);
                 this.setState({classMail:"invisible"});               
-               this.props.history.replace('Profile')              
                 console.log(res.data)  
                 this.state.Partner = res.data;
                 this.setState({Partner:res.data});
                 console.log(this.state.Partner);
                 localStorage.setItem('Partner',JSON.stringify(res.data));
+                this.props.history.push('/HanyaHesham/PartnerDashboard/Profile')            
+
 
             }).catch(err=>{
                 alert("plaese Enter correct Data");
