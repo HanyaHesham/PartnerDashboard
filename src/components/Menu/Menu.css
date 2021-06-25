@@ -28,7 +28,7 @@ transition-duration: 0.4s;
 font-weight: bold;
 border: 1px solid green;
 }
-#cusinbtn:hover,#addmealbtn:hover {
+#cusinbtn,#addmealbtn{
     background-color: #4CAF50; 
     color: white;
 }
@@ -36,7 +36,7 @@ border: 1px solid green;
     transition-duration: 0.4s;
     border: 1px solid green;
 }
-#AddCatbtn:hover{
+#AddCatbtn{
     background-color: #4CAF50; 
     color: white;
 }

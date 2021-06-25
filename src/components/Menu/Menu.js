@@ -9,8 +9,16 @@ import { Link } from 'react-router-dom';
 
 export default class Menu extends React.Component{
     state={
-        show:false,Category:[],CategoryName:"",Meals:[],Categoryid:"",CusineName:"",showmodal:false,Cusine:[]
+        show:false,Category:[],CategoryName:"",Meals:[],Categoryid:"",CusineName:"",
+        showmodal:false,Cusine:[],showMealmodal:false,MealName:"",Price:0,Discount:0
     }
+    componentDidMount(){
+      console.log(this.state.Category)
+      axios.get(`https://localhost:44327/api/Category/All?id=1`).then(x=>{
+         this.setState({Category:x.data})})
+         axios.get(`https://localhost:44327/api/cusine/1`).then(x=>{
+           this.setState({Cusine:x.data})})
+  }
     handleClose = () =>{
         this.setState({
           show:false
@@ -31,6 +39,16 @@ export default class Menu extends React.Component{
         showmodal:false
       })
      }
+     handleShowMeal=()=>{
+      this.setState({
+        showMealmodal:true
+      })
+     }
+     handleCloseMealmodal=()=>{
+      this.setState({
+        showMealmodal:false
+      })
+     }
      
      handlecategory=(e)=>{
         this.state.CategoryName=e.target.value
@@ -39,13 +57,54 @@ export default class Menu extends React.Component{
        })
        console.log(this.state.CategoryName)
    }
-   handlecusine=(e)=>{
-    this.state.CusineName=e.target.value
-   this.setState({
-    CusineName:this.state.CusineName
-   })
-   console.log(this.state.CusineName)
-}
+
+    handlecusine=(e)=>{
+      this.state.CusineName=e.target.value
+    this.setState({
+      CusineName:this.state.CusineName
+    })
+    console.log(this.state.CusineName)
+  }
+  HandleMealName=(e)=>{
+    this.state.MealName=e.target.value
+    this.setState({
+      MealName:this.state.MealName
+    })
+    console.log(this.state.MealName)
+
+  }
+  HandlePrice=(e)=>{
+    this.state.Price=e.target.value
+    this.setState({
+      Price:this.state.Price
+    })
+    console.log(this.state.Price)
+  }
+  HandleDiscount=(e)=>{
+    this.state.Discount=e.target.value
+    this.setState({
+      Discount:this.state.Discount
+    })
+    console.log(this.state.Discount)
+  }
+
+
+      EditMeal=(i)=>{
+        const config = {
+          headers: {
+            'Content-Type':'application/x-www-form-urlencoded',
+            'Accept':'*/*',
+          }
+        }
+        const params = new URLSearchParams()
+        let URL=`https://localhost:44327/api/EditMeal?id=${i}&name=${this.state.MealName}&price=${this.state.Price}&discount=${this.state.Discount}`
+        axios.post(URL,params,config).then(res=>{
+          // this.setState({Category:res.data})
+          }).catch(error=>{
+              console.log(error)
+              })  
+
+      }
      AddCategoryHandler=()=>{
         const config = {
             headers: {
@@ -63,13 +122,7 @@ export default class Menu extends React.Component{
                 console.log(error)
                 })  
      }
-     componentDidMount(){
-         console.log(this.state.Category)
-         axios.get(`https://localhost:44327/api/Category/All?id=1`).then(x=>{
-            this.setState({Category:x.data})})
-            axios.get(`https://localhost:44327/api/cusine/1`).then(x=>{
-              this.setState({Cusine:x.data})})
-     }
+     
      handlemeals=(id)=>{
        
         axios.get(`https://localhost:44327/api/Meal/All?id=${id}`).then(x=>{
@@ -158,6 +211,7 @@ export default class Menu extends React.Component{
             })  
 
      }
+
     render(){
         return(
           
@@ -170,7 +224,7 @@ export default class Menu extends React.Component{
                 <div className="col-4 categories" >
                     <div className="row">
                     <h3 className="col-8">Categories</h3>
-                    <button className="btn col-4" id="AddCatbtn" onClick={this.handleshoww} style={{fontWeight:"bold"}}>Add <FontAwesomeIcon  icon={faPlus} /></button>
+                    <button className="btn col-4" id="AddCatbtn" onClick={this.handleshoww} style={{fontWeight:"bold"}}>Add<FontAwesomeIcon  icon={faPlus} /></button>
                             <Modal show={this.state.show} onHide={this.handleClose} >
                                 <Modal.Body> 
                                 <button className="close" onClick={this.handleClose} aria-label="Close">
@@ -209,11 +263,11 @@ export default class Menu extends React.Component{
                         }
                     </ul>
                 </div>
-               
+               {/* ------------------------------------------------Meals-----------------------------------------------*/}
                 <div className="col-7 meals">
                     <div>
                         <div></div>
-                        <Link  to={{pathname:`/HanyaHesham/PartnerDashboard/AddMeal/${this.state.Categoryid}` ,selectedCategory:this.state.Categoryid}} className="btn" id="addmealbtn"  >Add new Meal <FontAwesomeIcon  icon={faPlus} /></Link>
+                        <Link  to={{pathname:`/HanyaHesham/PartnerDashboard/AddMeal/${this.state.Categoryid}` ,selectedCategory:this.state.Categoryid}} className="btn" id="addmealbtn"  >Add Meal <FontAwesomeIcon  icon={faPlus} /></Link>
                       
                     </div>
                     <br></br><br></br>
@@ -230,7 +284,35 @@ export default class Menu extends React.Component{
                                     <span class="h6"style={{color: '#aaa'}}>{Meal.MealPrice} LE</span><br />
                                 </div>
                                 <div class="col-lg-4">
-                                <button className="btn " onClick={()=>this.DeleteMealHandler(Meal.MealId)}><FontAwesomeIcon  icon={faTrash} style={{color:"red"}} /></button> &nbsp;<button className="btn "><FontAwesomeIcon  icon={faEdit} style={{color:"black"}}  /></button>
+                                <button className="btn " onClick={()=>this.DeleteMealHandler(Meal.MealId)}>
+                                  <FontAwesomeIcon  icon={faTrash} style={{color:"red"}} /></button> &nbsp;<button className="btn ">
+                                  <FontAwesomeIcon  icon={faEdit} style={{color:"black"}} onClick={this.handleShowMeal} /></button>
+                                            <Modal show={this.state.showMealmodal} onHide={this.handleCloseMealmodal} >
+                                              <Modal.Body> 
+                                              <button className="close" onClick={this.handleClosemodal} aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                  <br></br>
+                                              <form>
+                                                      <div class="form-row">
+                                                          <div class="form-group col-md-12">
+                                                          <label for="Mealname">Meal name</label>
+                                                          <input type="Text" class="form-control" id="Mealname" placeholder="Ex-S" onChange={this.HandleMealName}  />
+                                                          <label for="Price">Meal price</label>
+                                                          <input type="number" class="form-control" id="Price" placeholder="0" onChange={this.HandlePrice}  />
+                                                          <label for="Discount">Discount</label>
+                                                          <input type="number" class="form-control" id="Discount" placeholder="0" onChange={this.HandleDiscount}  />
+                                                          </div>
+                                                      </div>
+                                                      <br></br>
+                                                      <div class="form-row">
+                                                      <button className="btn btn-success form-control"  onClick={()=>this.EditMeal(Meal.MealId)}>Save</button>
+                                                      </div>
+                                              </form>
+                                              </Modal.Body>
+                          
+                                       </Modal>
+
                                 </div>
 
 
@@ -241,9 +323,10 @@ export default class Menu extends React.Component{
                   
                 </div>
                 </div>
+                {/* -----------------------------------Cuisines-------------------------------------------------------------- */}
                 <div className="row ml-3" >
-                  <div className="col-7">
-                <h3 >Cusines</h3>
+                  <div className="col-3">
+                <h3 >Cuisines</h3>
                 <ul>
                             {   this.state.Cusine.map((cat,i)=>{
                        
@@ -261,7 +344,7 @@ export default class Menu extends React.Component{
                </div>
             
                <div  className="col-3" >
-               <button id="cusinbtn" className="btn" onClick={this.handleshow}style={{fontWeight:"bold"}}> Add ciusine <FontAwesomeIcon  icon={faPlus} /></button>
+               <button id="cusinbtn" className="btn" onClick={this.handleshow} style={{fontWeight:"bold"}}> Add Cuisine <FontAwesomeIcon  icon={faPlus} /></button>
                </div>
                <Modal show={this.state.showmodal} onHide={this.handleClosemodal} >
                                 <Modal.Body> 
@@ -272,7 +355,7 @@ export default class Menu extends React.Component{
                                 <form>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
-                                            <label for="Cusineinput">Cusine name</label>
+                                            <label for="Cusineinput">Cuisine name</label>
                                             <input type="Text" class="form-control" id="Cusineinput" placeholder="Ex-Salads" onChange={this.handlecusine}  />
                                             </div>
                                         </div>
