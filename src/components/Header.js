@@ -48,14 +48,13 @@ export default class Header  extends React.Component{
 
                 &nbsp; &nbsp;    &nbsp; &nbsp;
                 <li class="nav-item">
-                        <Link class="nav-link" to="/HanyaHesham/PartnerDashboard/Login"
+                        <a class="nav-link" href="/HanyaHesham/PartnerDashboard/Login"
                             onClick={()=>{
                                 localStorage.removeItem('Partner')
-                               // this.props.history.push('/HanyaHesham/PartnerDashboard/Login');
 
                             }}>
                                 <i class="fas">
-                                    <FontAwesomeIcon  icon={faSignOutAlt} /></i> LogOut </Link>
+                                    <FontAwesomeIcon  icon={faSignOutAlt} /></i> LogOut </a>
                 </li>
                 </ul>
             </div>
