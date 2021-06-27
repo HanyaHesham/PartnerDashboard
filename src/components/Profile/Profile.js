@@ -1,11 +1,24 @@
 import React  from 'react';
 import axios from 'axios';
+import Modal from 'react-bootstrap/Modal';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 export default class Profile extends React.Component{
     state={
         partner:{},
         PartenerId:JSON.parse(localStorage.getItem('Partner')).PartenerId,
+        setShow:false,
+
     }
+
+    handleShow=()=>{
+        this.setState({setShow:true});
+      }
+      handleClose=()=>{
+        this.setState({setShow:false});
+      }
+
 
     componentDidMount(){
         this.getPartnerDetails()
@@ -46,10 +59,11 @@ export default class Profile extends React.Component{
     }
 
     customEdit=()=>{
+        this.handleClose();
         const config = {
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept':'*/*'
+              'Accept':'/'
             }
           }
 
@@ -68,7 +82,8 @@ export default class Profile extends React.Component{
           let URL=`https://localhost:44327/api/editPartner/${this.state.partner.PartenerId}`
 
           axios.post(URL, params, config).then(res=>{
-              console.log(res);             
+              console.log(res);
+              alert("Data Updated Successfully");         
           })
           .catch(error=>{
             console.log(error)   
@@ -87,7 +102,23 @@ export default class Profile extends React.Component{
                 <div class="row" >
                        
                      <div class="col col-md-12">
-                         {                        
+                         <h3 style={{color:"brown", textAlign:'center'}}>{this.state.partner.FirstName} {this.state.partner.LastName}</h3>
+                         <h4 style={{textAlign:'center'}}>Username: {this.state.partner.Username}</h4>
+                         <h4 style={{textAlign:'center'}}>Email: {this.state.partner.Email}</h4>
+                         <button className="btn btn-success col-4 offset-4 mt-5 mb-5" onClick={this.handleShow}> Edit My Account < FontAwesomeIcon icon={faEdit}/></button>
+                         <Modal show={this.state.setShow}
+                                size="lg"
+                                aria-labelledby="contained-modal-title-vcenter"
+                                centered
+                                >
+                                <Modal.Header>
+                                    <h5 style={{color:'#810000'}}>Edit My Account</h5>
+                                    <button className="close" onClick={this.handleClose} aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </Modal.Header>
+                                <Modal.Body>
+                                {                        
                         <form class="needs-validation" novalidate>                                                      
                         <div class="form-group row">
                                 <label htmlFor="text" class="col-sm-4 col-form-label thandlabel">Username</label>
@@ -133,7 +164,10 @@ export default class Profile extends React.Component{
 
                         </form>                      
                     }
-                       
+                                </Modal.Body>
+
+                        </Modal>
+                      
                     </div>
                 </div>
 
