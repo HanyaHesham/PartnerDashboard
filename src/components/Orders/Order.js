@@ -5,7 +5,7 @@ import './Order.css';
 
 export default class Order extends React.Component{
     state={
-        RestId:1,
+        RestId:localStorage.getItem('Resturant'),
         RestOrders:[],
         RestMealOrders:[]
     }
