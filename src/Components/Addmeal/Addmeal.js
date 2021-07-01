@@ -2,6 +2,7 @@ import React from 'react';
 import './Addmeal.css';
 import axios from 'axios';
 import logo from '../../images/add-image.jpg';
+import swal from 'sweetalert';
 
 export default class AddMeal extends React.Component{
     state={
@@ -80,6 +81,8 @@ saveImage=()=>{
         })
       }
     )
+    swal("Saved", "", "success")
+    this.props.history.push('/HanyaHesham/PartnerDashboard/Menu')
   }
 
 
