@@ -10,14 +10,22 @@ import { Link } from 'react-router-dom';
 export default class Menu extends React.Component{
     state={
         show:false,Category:[],CategoryName:"",Meals:[],Categoryid:"",CusineName:"",
-        showmodal:false,Cusine:[],showMealmodal:false,MealName:"",Price:0,Discount:0
+        showmodal:false,Cusine:[],showMealmodal:false,MealName:"",Price:0,Discount:0,RestId:localStorage.getItem('Resturant'),
+        showMenuModal:false,MenuName:"",Menu:[]
     }
     componentDidMount(){
       console.log(this.state.Category)
-      axios.get(`https://localhost:44327/api/Category/All?id=1`).then(x=>{
-         this.setState({Category:x.data})})
-         axios.get(`https://localhost:44327/api/cusine/1`).then(x=>{
+   
+      axios.get(`https://localhost:44327/api/cusine/${this.state.RestId}`).then(x=>{
            this.setState({Cusine:x.data})})
+      axios.get(`https://localhost:44327/api/Menus/${this.state.RestId}`).then(x=>{
+            this.setState({Menu:x.data})})
+              
+
+  }
+  showCategories=()=>{
+    axios.get(`https://localhost:44327/api/Categories?id=${this.state.RestId}`).then(x=>{
+      this.setState({Category:x.data})})
   }
     handleClose = () =>{
         this.setState({
@@ -115,7 +123,7 @@ export default class Menu extends React.Component{
           const params = new URLSearchParams()
           params.append('Name',this.state.CategoryName)
           params.append('MenuID', 1)
-          let URL=`https://localhost:44327/api/Categories?RestId=${1}`
+          let URL=`https://localhost:44327/api/Categories?RestId=${this.state.RestId}`
           axios.post(URL,params,config).then(res=>{
             this.setState({Category:res.data})
             }).catch(error=>{
@@ -203,18 +211,54 @@ export default class Menu extends React.Component{
       const paramss = new URLSearchParams()
       paramss.append('cusineName',this.state.CusineName)
       // paramss.append('Restaurant_RestaurantId', 1)
-      let URLL=`https://localhost:44327/api/Cusine?cusineName=${this.state.CusineName}&RestId=${1}`
+      let URLL=`https://localhost:44327/api/Cusine?cusineName=${this.state.CusineName}&RestId=${this.state.RestId}`
       axios.post(URLL,paramss,config).then(res=>{
         this.setState({Cusine:res.data})
         }).catch(error=>{
             console.log(error)
             })  
-
      }
+     HandleMenuName=(e)=>{
+      this.state.MenuName=e.target.value
+      this.setState({
+        MenuName:this.state.MenuName
+      })
+      console.log(this.state.MenuName)
+    }
+
+     AddMenu=()=>{
+      const config = {
+        headers: {
+          'Content-Type':'application/x-www-form-urlencoded',
+          'Accept':'*/*',
+        }
+      }
+      const paramss = new URLSearchParams()
+      paramss.append('MenuName',this.state.MenuName)
+      paramss.append('RestaurantID',this.state.RestId)
+      let URLL=`https://localhost:44327/api/AddMenu`
+      axios.post(URLL,paramss,config).then(res=>{
+        this.setState({Menu:res.data})
+        }).catch(error=>{
+            console.log(error)
+            })     
+     }
+     handleOpenModal=()=>{
+      this.setState({
+        showMenuModal:true
+      })
+     }
+     CloseMenumodal=()=>{
+      this.setState({
+        showMenuModal:false
+      })
+     }
+     
 
     render(){
+      if(this.state.Menu.length!=0){
         return(
-          
+         
             <div className="container shadow bg-white rounded" id="catcont" style={{marginTop:50}}>
                <h2 style={{color:"brown"}}>My Menu Items </h2>
            
@@ -223,7 +267,7 @@ export default class Menu extends React.Component{
              
                 <div className="col-4 categories" >
                     <div className="row">
-                    <h3 className="col-8">Categories</h3>
+                    <h3 className="col-8" onClick={this.showCategories} style={{cursor:"pointer"}}>Categories</h3>
                     <button className="btn col-4" id="AddCatbtn" onClick={this.handleshoww} style={{fontWeight:"bold"}}>Add<FontAwesomeIcon  icon={faPlus} /></button>
                             <Modal show={this.state.show} onHide={this.handleClose} >
                                 <Modal.Body> 
@@ -289,7 +333,7 @@ export default class Menu extends React.Component{
                                   <FontAwesomeIcon  icon={faEdit} style={{color:"black"}} onClick={this.handleShowMeal} /></button>
                                             <Modal show={this.state.showMealmodal} onHide={this.handleCloseMealmodal} >
                                               <Modal.Body> 
-                                              <button className="close" onClick={this.handleClosemodal} aria-label="Close">
+                                              <button className="close" onClick={this.handleCloseMealmodal} aria-label="Close">
                                                   <span aria-hidden="true">&times;</span>
                                                   </button>
                                                   <br></br>
@@ -324,7 +368,7 @@ export default class Menu extends React.Component{
                 </div>
                 </div>
                 {/* -----------------------------------Cuisines-------------------------------------------------------------- */}
-                <div className="row ml-3" >
+                <div className="row ml-4" >
                   <div className="col-3">
                 <h3 >Cuisines</h3>
                 <ul>
@@ -372,5 +416,42 @@ export default class Menu extends React.Component{
         </div>
           
         )
+            }
+            else{
+              return(
+                <div className="container shadow bg-white rounded " id="catcont" style={{marginTop:50}}>
+                <div className="row  rounded justify-content-center">
+                <h3>No Items yet</h3>
+                <svg xmlns="http://www.w3.org/2000/svg" id="svgProp" width="100" height="70" fill="#CDC6BF" class="bi bi-lock" viewBox="0 0 16 16">
+                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z" />
+                </svg>
+                </div>
+                <div class="btnItems ">
+                <button className="btn btn-success mt-3 offset-3" style={{width:"40%"}} onClick={this.handleOpenModal}>Add Menu</button>
+                <Modal show={this.state.showMenuModal} onHide={this.CloseMenumodal} >
+                                <Modal.Body> 
+                                <button className="close" onClick={this.CloseMenumodal} aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <br></br>
+                              
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                            <label for="Menuinput">Menu Name</label>
+                                            <input type="Text" class="form-control" id="Menuinput" placeholder="Ex-Bremer" onChange={this.HandleMenuName}/>
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                        <div class="form-row">
+                                        <button className="btn btn-success form-control" onClick={this.AddMenu} >Add Menu</button>
+                                        </div>
+                              
+                                </Modal.Body>
+                          
+                            </Modal>
+                </div>
+                </div>
+              )
+            }
     }
 }
