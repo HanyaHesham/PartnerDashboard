@@ -20,7 +20,8 @@ export default class Login extends React.Component{
         classMail:"invisible",
         classPass:"invisible",
         passwordtype:"password",
-        Partner:{}
+        Partner:{},
+        ShowSpan:"none"
     }
     handleEmailChange = (e) =>{
            const validUserName = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
@@ -91,7 +92,10 @@ export default class Login extends React.Component{
                 window.location.reload(false);
 
             }).catch(err=>{
-                alert("plaese Enter correct Data");
+                // alert("plaese Enter correct Data");
+                this.setState({
+                    ShowSpan:"block"
+                })
                 // swal.fire({
                 // icon: 'error',
                 // title: 'Oops...',
@@ -162,12 +166,14 @@ export default class Login extends React.Component{
                                             </div>
                                     </div>
                                 </div> 
+                                <span style={{display:this.state.ShowSpan,color:"red"}}>Username or password is incorrect </span>
                                  <div class="form-check mt-4 ml-1">
                                     <label class="form-check-label" />
                                         <input type="checkbox" class="form-check-input" name="" id="check" value="checkedValue" />
                                      Remember Me
                                     {/* </label>                               */}
                                 </div>                           
+                               
                                 <button  type="button" id="login" class='mybtn btn btn-primary btn-block mt-3 form-control formcntrl'  
                                 onClick={()=>this.Login()} disabled={this.state.disabled} >Login</button>
                             </form>
