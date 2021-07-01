@@ -2,17 +2,35 @@ import React from 'react';
 import './Restaurant.css';
 import logo from '../../images/add-image.jpg'
 import axios from 'axios';
-
+import swal from 'sweetalert';
 
 class Restaurant extends React.Component {
 
     state = {
-      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:0,EndWorkingHours:0,Date:"",MaxDeliveryTime:0,AddressID:1,
-      PartenerID:2,
-      fd:new FormData() 
+      RestaurantName:"",HotLine:"",Description:"",WebSite:"",StartWorkingHours:0,EndWorkingHours:0,Date:"",MaxDeliveryTime:0,AddressID:"",
+      PartenerId:JSON.parse(localStorage.getItem('Partner')).PartenerId,
+      fd:new FormData(),ResturantDetails:{},image:"",RestId:""
     }
     
     componentDidMount() {
+      axios.get(`https://localhost:44327/api/RestDetails/${this.state.PartenerId}`).then(
+        (res)=>{
+          this.setState({
+            ResturantDetails:res.data,
+            RestaurantName:res.data.RestaurantName,
+            Description:res.data.Description,
+            WebSite:res.data.WebSite,
+            HotLine:res.data.HotLine,
+            StartWorkingHours:res.data.StartWorkingHours,
+            EndWorkingHours:res.data.EndWorkingHours,
+            image:res.data.Image,
+            RestId:res.data.RestaurantId,
+            AddressID:res.data.AddressID
+          })
+          localStorage.setItem('Resturant',res.data.RestaurantId)
+          console.log(res.data)
+        }
+      )
         //this.setState({Rest:this.state.Rest})
 
     }
@@ -30,15 +48,9 @@ class Restaurant extends React.Component {
    
  }
 
- saveImage=()=>{
 
-  axios.post("https://localhost:44327/api/AddImage",this.state.fd).then(
-    (res)=>{
-      console.log(res.data)
-    }
-  )
-}
-    handleRestaurantName=(e)=>{
+
+handleRestaurantName=(e)=>{
       this.state.RestaurantName=e.target.value
      this.setState({
       RestaurantName:this.state.RestaurantName
@@ -108,9 +120,7 @@ handleMaxDeliveryTime=(e)=>{
  })
  console.log(this.state.MaxDeliveryTime)
 }
-
-saveImage=()=>{
-  
+EditResturant=()=>{
   this.state.fd.append('person',JSON.stringify(
     {
     RestaurantName:this.state.RestaurantName,
@@ -127,7 +137,7 @@ saveImage=()=>{
       )
     
     );
-  axios.post("https://localhost:44327/api/Image/select",this.state.fd).then(
+  axios.post(`https://localhost:44327/api/EditResturant/${this.state.RestId}`,this.state.fd).then(
     (res)=>{
       this.state.imgFlage=res.data
       this.setState({
@@ -138,54 +148,88 @@ saveImage=()=>{
         fd:this.state.fd
       })
     }
+   
   )
+  swal("Edited", "", "success")
 }
 
+// saveImage=()=>{
+  
+//   this.state.fd.append('person',JSON.stringify(
+//     {
+//     RestaurantName:this.state.RestaurantName,
+//     HotLine:this.state.HotLine,
+//     Description:this.state.Description,
+//     WebSite:this.state.WebSite,
+//     StartWorkingHours:this.state.StartWorkingHours,
+//     EndWorkingHours:this.state.EndWorkingHours,
+//     Date:this.state.Date,
+//     MaxDeliveryTime:this.state.MaxDeliveryTime,
+//     PartenerID:this.state.PartenerID,
+//     AddressID:this.state.AddressID
+//     }
+//       )
+    
+//     );
+//   axios.post("https://localhost:44327/api/Image/select",this.state.fd).then(
+//     (res)=>{
+//       this.state.imgFlage=res.data
+//       this.setState({
+//         imgFlage:this.state.imgFlage
+//       })
+//       this.state.fd=new FormData()
+//       this.setState({
+//         fd:this.state.fd
+//       })
+//     }
+//   )
+// }
 
-handleAddrestaurant=()=>{
+
+// handleAddrestaurant=()=>{
       
        
-  const config = {
-      headers: {
-        'Content-Type':'application/x-www-form-urlencoded',
-        'Accept':'*/*',
-      }
+//   const config = {
+//       headers: {
+//         'Content-Type':'application/x-www-form-urlencoded',
+//         'Accept':'*/*',
+//       }
       
-    }
-    const paramss = new URLSearchParams()
+//     }
+//     const paramss = new URLSearchParams()
     
-    // this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
-    // paramss.append('HotLine', this.state.HotLine)
-    // paramss.append( 'Description', this.state.Description)
-    // paramss.append( 'WebSite', this.state.WebSite)
-    // paramss.append('StartWorkingHours', this.state.StartWorkingHours)
-    // paramss.append('EndWorkingHours', this.state.EndWorkingHours)
-    // paramss.append('Date', this.state.Date)
-    // paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
-    // paramss.append('PartenerID', this.state.PartenerID)
-    // paramss.append('AddressID', this.state.AddressID)
+//     // this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+//     // paramss.append('HotLine', this.state.HotLine)
+//     // paramss.append( 'Description', this.state.Description)
+//     // paramss.append( 'WebSite', this.state.WebSite)
+//     // paramss.append('StartWorkingHours', this.state.StartWorkingHours)
+//     // paramss.append('EndWorkingHours', this.state.EndWorkingHours)
+//     // paramss.append('Date', this.state.Date)
+//     // paramss.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+//     // paramss.append('PartenerID', this.state.PartenerID)
+//     // paramss.append('AddressID', this.state.AddressID)
     
-    this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
-    this.state.fd.append('HotLine', this.state.HotLine)
-    this.state.fd.append( 'Description', this.state.Description)
-    this.state.fd.append( 'WebSite', this.state.WebSite)
-    this.state.fd.append('StartWorkingHours', this.state.StartWorkingHours)
-    this.state.fd.append('EndWorkingHours', this.state.EndWorkingHours)
-    this.state.fd.append('Date', this.state.Date)
-    this.state.fd.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
-    this.state.fd.append('PartenerID', this.state.PartenerID)
-    this.state.fd.append('AddressID', this.state.AddressID)
-    console.log(paramss)
-    let URLL=`https://localhost:44327/api/Restdashborad`
-    axios.post(URLL,paramss,config).then(res=>{
-           console.log(paramss)
-        console.log(res)
+//     this.state.fd.append( 'RestaurantName',this.state.RestaurantName)
+//     this.state.fd.append('HotLine', this.state.HotLine)
+//     this.state.fd.append( 'Description', this.state.Description)
+//     this.state.fd.append( 'WebSite', this.state.WebSite)
+//     this.state.fd.append('StartWorkingHours', this.state.StartWorkingHours)
+//     this.state.fd.append('EndWorkingHours', this.state.EndWorkingHours)
+//     this.state.fd.append('Date', this.state.Date)
+//     this.state.fd.append('MaxDeliveryTime', this.state.MaxDeliveryTime)
+//     this.state.fd.append('PartenerID', this.state.PartenerID)
+//     this.state.fd.append('AddressID', this.state.AddressID)
+//     console.log(paramss)
+//     let URLL=`https://localhost:44327/api/Restdashborad`
+//     axios.post(URLL,paramss,config).then(res=>{
+//            console.log(paramss)
+//         console.log(res)
         
-    }).catch(error=>{
-     console.log(error)
-    })
+//     }).catch(error=>{
+//      console.log(error)
+//     })
 
-  }
+//   }
 
 
     render() {
@@ -194,7 +238,7 @@ handleAddrestaurant=()=>{
                <>
              
             <div class="container shadow p-3 mb-5 bg-white rounded" style={{marginTop:50}}>
-                <h2 style={{color:"brown", textAlign:'center'}}>Add Your Restaurant</h2>
+                <h2 style={{color:"brown", textAlign:'center'}}>Your Restaurant Details</h2>
                 <hr></hr>               
                 <div class="row" >                       
                      <div class="col col-md-12">
@@ -209,6 +253,7 @@ handleAddrestaurant=()=>{
                                   document.getElementById("fileI").click();
 
                                 }} height="100" width="100"/>
+                                {/* <img src={this.state.image}></img> */}
                                 </div>                                 
                                </div>
                            
@@ -305,7 +350,7 @@ handleAddrestaurant=()=>{
                          <div class="form-group row">
                             <label htmlFor="button" class="col-sm-4 col-form-label thandlabel"></label>
                              <div class="col-sm-8">
-                             <input type="button" class="btn btn-success inputt form-control" onClick={ this.saveImage}  value="Save"></input>
+                             <input type="button" class="btn btn-success inputt form-control" onClick={ this.EditResturant}  value="Update"></input>
                              </div>
                          </div>
                         </form>
