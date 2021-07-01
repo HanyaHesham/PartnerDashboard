@@ -32,7 +32,7 @@ export default class Header  extends React.Component{
                 &nbsp; &nbsp;    &nbsp; &nbsp;
                 <li class="nav-item" >
                         <Link class="nav-link" to="/HanyaHesham/PartnerDashboard/Restaurant"><i class="fas">
-                                    <FontAwesomeIcon  icon={faHome} /></i> Restaurant  </Link>
+                                    <FontAwesomeIcon  icon={faHome} /></i>My Restaurant  </Link>
                 </li>
                 &nbsp; &nbsp;    &nbsp; &nbsp;
                 <li class="nav-item nvitem">
